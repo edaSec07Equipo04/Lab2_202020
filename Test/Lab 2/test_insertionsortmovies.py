@@ -27,10 +27,19 @@ def tearDown():
        pass
 #vote_average;vote_count
 
-def loadCSVFile(file, lst):
-    input_file = csv.DictReader(open(file, encoding = "utf-8"))
-    for row in input_file:
-        lt.addLast(lst, row)
+def loadCSVFile(file, sep=';'):
+    lst_movies = []
+    dialect = csv.excel()
+    dialect.delimiter=sep
+    try:
+        with open(file, encoding='utf-8') as csvfile:
+            spamreader = csv.DictReader(csvfile,dialect=dialect)
+            for row in spamreader:
+                slt.addLast(lst_movies,row)
+    except:
+        print("Hubo un error en la carga del archivo")
+    return lst_movies
+
 
 def printList(lst):
     iterator = it.newIterator(lst)
