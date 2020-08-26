@@ -1,6 +1,23 @@
-
-
-
+"""
+ * Copyright 2020, Departamento de sistemas y Computación, Universidad de Los Andes
+ *
+ *
+ * Desarrolado para el curso ISIS1225 - Estructuras de Datos y Algoritmos
+ *
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ """
 
 
 import pytest
@@ -13,19 +30,19 @@ import csv
 list_type = 'ARRAY_LIST'
 #list_type = 'SINGLE_LINKED'
 
-lst_moovie = lt.newList(list_type)
-mooviefile = cf.data_dir + 'theMoviesdb/AllMoviesDetailsCleaned2.csv'
+lst_movies = lt.newList(list_type)
+moviefile = cf.data_dir + 'theMoviesdb/SmallMoviesDetailsCleaned2.csv'
 
 
 def setUp():
     print('Loading movies')
-    loadCSVFile(mooviefile, lst_moovie)
-    print(lst_moovie['size'])
+    loadCSVFile(moviefile, lst_movies)
+    print(lst_movies['size'])
 
 
 def tearDown():
        pass
-#vote_average;vote_count
+
 
 def loadCSVFile(file, lst, sep=';'):
     dialect = csv.excel()
@@ -35,7 +52,8 @@ def loadCSVFile(file, lst, sep=';'):
             spamreader = csv.DictReader(csvfile, dialect=dialect)
             for row in spamreader: 
                 lt.addLast(lst,row)
-
+    except:
+        print("Hubo un error con la carga del archivo")
 def printList(lst):
     iterator = it.newIterator(lst)
     while it.hasNext(iterator):
@@ -52,18 +70,18 @@ def test_sort():
     Lista con elementos en orden aleatorio
     """
     print("sorting ....")
-    sort.insertionSort(lst_moovie, less)
+    sort.insertionSort(lst_movies, less)
 
 def test_loading_CSV_y_ordenamiento():
     """
     Prueba que se pueda leer el archivo y que despues de relizar el sort, el orden este correcto
     """
     setUp()
-    sort.insertionSort(lst_moovie,less)
-    while not (lt.isEmpty(lst_moovie)):
-        x = float(lt.removeLast(lst_moovie)['vote_average'])
-        if not (lt.isEmpty(lst_moovie)):
-            y = float(lt.lastElement(lst_moovie)['vote_average'])
+    sort.insertionSort(lst_movies,less)
+    while not (lt.isEmpty(lst_movies)):
+        x = float(lt.removeLast(lst_movies)['vote_average'])
+        if not (lt.isEmpty(lst_movies)):
+            y = float(lt.lastElement(lst_movies)['vote_average'])
         else:
             break
         assert x >= y
